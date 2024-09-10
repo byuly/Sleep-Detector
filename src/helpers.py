@@ -1,6 +1,7 @@
 
 import numpy as np
 import cv2
+import playsound
 
 def calculate_angle(a, b, c):
     a = np.array(a)
@@ -39,21 +40,6 @@ def show_start_screen():
             break
 
     cv2.destroyWindow('Start Screen')
-
-    def calculate_eye_aspect_ratio(eye_landmarks):
-        # Indices for the eye landmarks from the face mesh model (assume you are using MediaPipe Face Mesh)
-        # You need to adjust these indices if they are different in your implementation
-        A = np.linalg.norm(np.array(eye_landmarks[1]) - np.array(eye_landmarks[5]))
-        B = np.linalg.norm(np.array(eye_landmarks[2]) - np.array(eye_landmarks[4]))
-        C = np.linalg.norm(np.array(eye_landmarks[0]) - np.array(eye_landmarks[3]))
-
-        # Calculate EAR
-        ear = (A + B) / (2.0 * C)
-        return ear
     
-    def calculate_eye_closure(eye_landmarks):
-        EAR_THRESHOLD = 0.2  # You may need to adjust this threshold
-        ear = calculate_eye_aspect_ratio(eye_landmarks)
-    
-        # Return True if the EAR is below the threshold (indicating eye closure), otherwise False
-        return ear < EAR_THRESHOLD
+def sound(file_path):
+    playsound.playsound(file_path)

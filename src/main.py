@@ -23,7 +23,7 @@ shoulder_threshold_right = 0
 neck_threshold_right = 0
 last_alert_time = 0
 ALERT_COOLDOWN = 5  # 10 seconds cooldown between alerts
-sound_file = 'alert_sound.mp3'  # Make sure the sound file exists in working directory
+sound_file = 'src/ding.mp3'  # Make sure the sound file exists in working directory
 text_display_duration = 10
 start_time = None
 
@@ -98,8 +98,7 @@ while cap.isOpened():
                 status = "Poor Posture!!"
                 color = (0, 0, 255)  # Red
                 if current_time - last_alert_time > ALERT_COOLDOWN: # 10 second cooldown, can be changed in declaration above
-                    if os.path.exists(sound_file):
-                        playsound(sound_file)
+                    helpers.sound('data/ding.mp3')
                     start_time = False
                     last_alert_time = current_time
             else:
