@@ -34,7 +34,6 @@ while cap.isOpened():
     if not ret: #if frame capture fails continue to next ITERATION of while loop
         continue
 
-  
     results = pose.process(frame)
 
     if results.pose_landmarks:
