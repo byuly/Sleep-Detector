@@ -6,6 +6,7 @@ from playsound import playsound
 import os
 import helpers
 import time 
+import threading
 
 # Initializing mediapipe for pose, and setting up video capture
 mp_pose = mp.solutions.pose
@@ -26,6 +27,12 @@ ALERT_COOLDOWN = 5  # 10 seconds cooldown between alerts
 sound_file = 'src/ding.mp3'  # Make sure the sound file exists in working directory
 text_display_duration = 10
 start_time = None
+
+
+def sound(file_path): 
+    # Threading since the video lags when playing sound directly
+    sound_thread = threading.Thread(target=playsound, args=(file_path,), daemon=True)
+    sound_thread.start()
 
 helpers.show_start_screen()
 
@@ -98,8 +105,8 @@ while cap.isOpened():
                 status = "Poor Posture!!"
                 color = (0, 0, 255)  # Red
                 if current_time - last_alert_time > ALERT_COOLDOWN: # 10 second cooldown, can be changed in declaration above
-                    helpers.sound('data/ding.mp3')
                     start_time = False
+                    sound('data/ding.mp3')
                     last_alert_time = current_time
             else:
                 status = "Good Posture"

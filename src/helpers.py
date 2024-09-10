@@ -1,7 +1,7 @@
 
 import numpy as np
 import cv2
-import playsound
+
 
 def calculate_angle(a, b, c):
     a = np.array(a)
@@ -41,5 +41,3 @@ def show_start_screen():
 
     cv2.destroyWindow('Start Screen')
     
-def sound(file_path):
-    playsound.playsound(file_path)
