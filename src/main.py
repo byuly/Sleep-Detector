@@ -133,6 +133,7 @@ while cap.isOpened():
         cv2.circle(frame, left_eye_bottom, 3, (0, 0, 255), -1)  # Red for left eye bottom
         cv2.circle(frame, right_eye_top, 3, (0, 255, 0), -1)  # Green for right eye top
         cv2.circle(frame, right_eye_bottom, 3, (0, 0, 255), -1)  # Red for right eye bottom
+        
         # Display closed-eye alert
         if eye_closed:
             cv2.putText(frame, "Eyes Closed for 30 frames!", (10, 210), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
