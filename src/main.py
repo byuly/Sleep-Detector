@@ -137,6 +137,7 @@ while cap.isOpened():
         if eye_closed:
             cv2.putText(frame, "Eyes Closed for 30 frames!", (10, 210), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
+
         if is_calibrated:
             current_time = time.time()
             poor_posture_detected = False
