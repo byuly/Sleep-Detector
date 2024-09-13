@@ -13,7 +13,7 @@ mp_pose = mp.solutions.pose
 mp_drawing = mp.solutions.drawing_utils
 pose = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, min_tracking_confidence=0.5)
 
-# Initialize MediaPipe Face Mesh
+# Initializing mediapipe for face
 mp_face_mesh = mp.solutions.face_mesh
 face_mesh = mp_face_mesh.FaceMesh(refine_landmarks=True, max_num_faces=1)
 
@@ -28,12 +28,12 @@ neck_threshold_left = 0
 shoulder_threshold_right = 0
 neck_threshold_right = 0
 last_alert_time = 0
-ALERT_COOLDOWN = 5  # 10 seconds cooldown between alerts
-sound_file = 'src/ding.mp3'  # Make sure the sound file exists in working directory
+ALERT_COOLDOWN = 5  
+sound_file = 'src/ding.mp3'  
 text_display_duration = 10
 start_time = None
 
-# Define the indices for the eye top and bottom landmarks
+# Defining the indices for the eye top and bottom landmarks
 LEFT_EYE_TOP = 160
 LEFT_EYE_BOTTOM = 144
 RIGHT_EYE_TOP = 385
@@ -43,7 +43,7 @@ blink_counter = 0
 eye_closed = False
 
 def sound(file_path): 
-    # Threading since the video lags when playing sound directly
+    # Threading for async soundplay since the video lags when playing sound directly
     sound_thread = threading.Thread(target=playsound, args=(file_path,), daemon=True)
     sound_thread.start()
 
@@ -71,7 +71,7 @@ while cap.isOpened():
         right_ear = (int(landmarks[mp_pose.PoseLandmark.RIGHT_EAR.value].x * frame.shape[1]),
                      int(landmarks[mp_pose.PoseLandmark.RIGHT_EAR.value].y * frame.shape[0]))
 
-        # Extracting eye landmarks
+        # Eye landmarks normalized -> actual coordinates
         left_eye_top = (int(face_landmarks[LEFT_EYE_TOP].x * frame.shape[1]),
                         int(face_landmarks[LEFT_EYE_TOP].y * frame.shape[0]))
         left_eye_bottom = (int(face_landmarks[LEFT_EYE_BOTTOM].x * frame.shape[1]),
@@ -86,7 +86,7 @@ while cap.isOpened():
         right_eye_aspect_ratio = np.linalg.norm(np.array(right_eye_top) - np.array(right_eye_bottom))
 
         # Threshold value to detect closed eyes (adjust based on test observations)
-        eye_aspect_ratio_threshold = 10  # You may need to fine-tune this value
+        eye_aspect_ratio_threshold = 10 # fine-tune this if eye is detected too often / too less
 
         if left_eye_aspect_ratio < eye_aspect_ratio_threshold and right_eye_aspect_ratio < eye_aspect_ratio_threshold:
             frames_eye_closed += 1
@@ -103,7 +103,7 @@ while cap.isOpened():
         shoulder_angle_right = helpers.calculate_angle(right_shoulder, left_shoulder, (left_shoulder[0], 0))
         neck_angle_right = helpers.calculate_angle(right_ear, right_shoulder, (right_shoulder[0], 0))
 
-        # Calibration
+        # Calibration process for 60 frames
         if not is_calibrated and calibration_frames < 60:
             calibration_shoulder_angles.append((shoulder_angle_left, shoulder_angle_right))
             calibration_neck_angles.append((neck_angle_left, neck_angle_right))
@@ -121,7 +121,7 @@ while cap.isOpened():
             print(f"Calibration complete. Left Shoulder threshold: {shoulder_threshold_left:.1f}, Left Neck threshold: {neck_threshold_left:.1f}")
             print(f"Right Shoulder threshold: {shoulder_threshold_right:.1f}, Right Neck threshold: {neck_threshold_right:.1f}")
 
-        # Draw skeleton and angles
+        # Drawing landmarks onto video for testing
         mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
         midpoint = ((left_shoulder[0] + right_shoulder[0]) // 2, (left_shoulder[1] + right_shoulder[1]) // 2)
         helpers.draw_angle(frame, left_shoulder, midpoint, (midpoint[0], 0), shoulder_angle_left, (255, 255, 255))
