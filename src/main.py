@@ -128,7 +128,7 @@ while cap.isOpened():
         helpers.draw_angle(frame, left_ear, left_shoulder, (left_shoulder[0], 0), neck_angle_left, (255, 255, 255))
         helpers.draw_angle(frame, right_shoulder, midpoint, (midpoint[0], 0), shoulder_angle_right, (255, 255, 255))
         helpers.draw_angle(frame, right_ear, right_shoulder, (right_shoulder[0], 0), neck_angle_right, (255, 255, 255))
-     # Draw eye landmarks
+        # Draw eye landmarks
         cv2.circle(frame, left_eye_top, 3, (0, 255, 0), -1)  # Green for left eye top
         cv2.circle(frame, left_eye_bottom, 3, (0, 0, 255), -1)  # Red for left eye bottom
         cv2.circle(frame, right_eye_top, 3, (0, 255, 0), -1)  # Green for right eye top
