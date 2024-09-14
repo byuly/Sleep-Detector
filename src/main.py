@@ -32,15 +32,16 @@ ALERT_COOLDOWN = 5
 sound_file = 'src/ding.mp3'  
 text_display_duration = 10
 start_time = None
+blink_counter = 0
+eye_closed = False
 
-# Defining the indices for the eye top and bottom landmarks
+# Defining indices as constnats for the eye top and bottom landmarks
 LEFT_EYE_TOP = 160
 LEFT_EYE_BOTTOM = 144
 RIGHT_EYE_TOP = 385
 RIGHT_EYE_BOTTOM = 380
 EYE_CLOSED_FRAMES_THRESHOLD = 30
-blink_counter = 0
-eye_closed = False
+
 
 def sound(file_path): 
     # Threading for async soundplay since the video lags when playing sound directly
