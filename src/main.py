@@ -34,6 +34,7 @@ text_display_duration = 10
 start_time = None
 blink_counter = 0
 eye_closed = False
+frames_eye_closed = 0
 
 # Defining indices as constnats for the eye top and bottom landmarks
 LEFT_EYE_TOP = 160
