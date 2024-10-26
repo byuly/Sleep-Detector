@@ -3,7 +3,6 @@ import mediapipe as mp
 import numpy as np
 import time
 from playsound import playsound
-import os
 import helpers
 import time 
 import threading
@@ -157,11 +156,14 @@ while cap.isOpened():
                     start_time = False
                     sound('data/ding.mp3')
                     last_alert_time = current_time
-            else:
+            elif poor_posture_detected: 
+                status = "Poor Posture"
+                color = (126, 0, 126)  # Green
+                start_time = True
+            else: 
                 status = "Good Posture"
                 color = (0, 255, 0)  # Green
                 start_time = True
-
             cv2.putText(frame, status, (10, 30), cv2.FONT_HERSHEY_COMPLEX, 1, color, 2, cv2.LINE_AA)
 
 
