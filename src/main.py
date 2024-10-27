@@ -12,17 +12,14 @@ import tensorflow as tf
 emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful", 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
 
 
-# load json and create model
-json_file = open('model/emotion_model.json', 'r')
-loaded_model_json = json_file.read()
-json_file.close()
+with open("model/emotion_model.json", "r") as json_file:
+    loaded_model_json = json_file.read()
+
 emotion_model = model_from_json(loaded_model_json)
 
-# load weights into new model
+# Load weights into new model
 emotion_model.load_weights("model/emotion_model.h5")
 print("Loaded model from disk")
-
-
 
 # Initializing mediapipe for pose, and setting up video capture
 mp_pose = mp.solutions.pose
