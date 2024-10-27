@@ -1,9 +1,12 @@
 import tensorflow as tf
-from tensorflow import keras
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dense, Dropout, Flatten
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import cv2
 
-train_data_gen = keras.ImageDataGenerator(rescale=1./255)
-validation_data_gen = keras.ImageDataGenerator(rescale=1./255)
+train_data_gen = ImageDataGenerator(rescale=1./255)
+validation_data_gen = ImageDataGenerator(rescale=1./255)
 
 train_generator = train_data_gen.flow_from_directory(
     'data/train',
@@ -50,6 +53,8 @@ emotion_model_info = emotion_model.fit_generator(
         epochs = 50,
         validation_data = validation_generator,
         validation_steps = 7178 // 64)
+
+emotion_model.save('emotion_model.keras')
 
 model_json = emotion_model.to_json()
 with open("emotion_model.json", "w") as json_file:
