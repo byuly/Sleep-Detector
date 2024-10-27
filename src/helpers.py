@@ -27,7 +27,7 @@ def show_start_screen():
     start_screen = cv2.resize(background, (640, 480))
     
     # Add welcome text
-    cv2.putText(start_screen, "Welcome to Posture Corrector!", (180, 200),
+    cv2.putText(start_screen, "Welcome to Sleep Detector!", (180, 200),
                 cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
     cv2.putText(start_screen, "Get into your desired posture, calibration will start when you press 's'!", 
                 (0, 260), cv2.FONT_HERSHEY_COMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
