@@ -23,7 +23,7 @@ def draw_angle(frame, point1, point2, point3, angle, color):
     cv2.line(frame, point2, point3, color, 2)
 
 def show_start_screen():
-    background = cv2.imread('data/posture.png') 
+    background = cv2.imread('data/sleep.jpeg') 
     start_screen = cv2.resize(background, (640, 480))
     
     # Add welcome text

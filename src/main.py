@@ -48,13 +48,16 @@ start_time = None
 blink_counter = 0
 eye_closed = False
 frames_eye_closed = 0
+emotion_history = [4] * 5  # Initialize with Neutral
+emotion_cooldown = 0
+emotion_index = 4 
 
 # Defining indices as constnats for the eye top and bottom landmarks
 LEFT_EYE_TOP = 160
 LEFT_EYE_BOTTOM = 144
 RIGHT_EYE_TOP = 385
 RIGHT_EYE_BOTTOM = 380
-EYE_CLOSED_FRAMES_THRESHOLD = 30
+EYE_CLOSED_FRAMES_THRESHOLD = 20
 
 
 def sound(file_path): 
@@ -192,10 +195,23 @@ while cap.isOpened():
             cv2.putText(frame, status, (10, 30), cv2.FONT_HERSHEY_COMPLEX, 1, color, 2, cv2.LINE_AA)
 
             # predict the emotions
+            if emotion_cooldown < 30:
+                emotion_cooldown += 1
+            else:
+                emotion_cooldown = 0
+                if len(num_faces) > 0:
+                    (x, y, w, h) = num_faces[0]
+                    emotion_prediction = emotion_model.predict(cropped_img)
+                    max_confidence = np.max(emotion_prediction)
+                    if max_confidence > 0.6:
+                        current_emotion = int(np.argmax(emotion_prediction))
+                        emotion_history.append(current_emotion)
+                        emotion_history.pop(0)  # Remove oldest prediction
 
-            emotion_prediction = emotion_model.predict(cropped_img)
-            maxindex = int(np.argmax(emotion_prediction))
-            cv2.putText(frame, emotion_dict[maxindex], (x+5, y-20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+                        emotion_index = max(set(emotion_history), key=emotion_history.count)
+
+            # Display emotion text
+            cv2.putText(frame, emotion_dict[emotion_index], (x+5, y-20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
             cv2.putText(frame, status, (10, 30), cv2.FONT_HERSHEY_COMPLEX, 1, color, 2, cv2.LINE_AA)
             if not start_time:
