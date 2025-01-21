@@ -1,4 +1,4 @@
-# 🚨Sleep Detector - Driver Wellness Monitoring System🚨
+# 🚨Sleep Detector - Driver Wellness Monitoring System
 
 ## Overview
 This advanced computer vision application is designed to enhance driver safety by monitoring critical physiological and emotional states during long-haul drives. Initially started as a posture detector, the project has evolved into a comprehensive system that helps prevent fatigue-related accidents and provides insights into driver well-being.
